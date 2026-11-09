@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CineVerse
 
-## Getting Started
+Plataforma responsiva de descoberta de filmes e séries com dados reais da API do TMDB. O projeto usa Next.js App Router, React, TypeScript strict, Tailwind CSS, TanStack Query, Zustand, Motion e Vitest.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 20.9 ou superior
+- npm
+- Token de leitura da API do TMDB ([obtenha nas configurações da sua conta](https://www.themoviedb.org/settings/api))
+
+## Rodar localmente
+
+1. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+2. Crie `.env.local` na raiz e informe o token de leitura:
+
+   ```env
+   TMDB_READ_ACCESS_TOKEN=seu_token_de_leitura
+   ```
+
+   Ou copie `.env.example` para `.env.local`. O token é lido somente no servidor e nunca deve receber o prefixo `NEXT_PUBLIC_`.
+
+3. Inicie o servidor:
+
+   ```bash
+   npm run dev
+   ```
+
+   Acesse [http://localhost:3000](http://localhost:3000).
+
+## Comandos
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev       # desenvolvimento
+npm run lint      # ESLint
+npm run typecheck # verificação TypeScript
+npm test          # testes com Vitest e Testing Library
+npm run build     # build de produção
+npm start         # servir o build localmente
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Página inicial com destaques, tendências, lançamentos, filmes bem avaliados e séries populares.
+- Catálogos de filmes e séries com filtros de gênero, ano, avaliação e paginação.
+- Pesquisa de filmes e séries com debounce, filtro por tipo e paginação.
+- Detalhes, elenco, notas, gêneros, temporadas, trailer oficial e recomendações relacionadas.
+- Listas de favoritos, quero assistir e já assistidos, persistidas no armazenamento local do navegador.
+- A interface informa explicitamente quando a chave da API está ausente, há erro HTTP ou não há trailer/imagem.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+As consultas passam pelo Route Handler `/api/tmdb`, que valida os endpoints permitidos e mantém o token no servidor. As respostas são armazenadas em cache por cinco minutos. Favoritos são privados ao dispositivo e não são sincronizados entre navegadores.
 
-## Learn More
+## Deploy na Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. Importe este repositório na Vercel.
+2. Em **Settings → Environment Variables**, adicione `TMDB_READ_ACCESS_TOKEN` para os ambientes desejados.
+3. Faça o deploy; a Vercel detecta o Next.js e usa `npm run build`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Não publique `.env.local` nem tokens. O `.env.example` contém apenas o nome da variável, sem credenciais.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Créditos e atribuição
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Este produto utiliza a API do TMDB, mas não é endossado ou certificado pelo TMDB. Os metadados e imagens são fornecidos pela TMDB. CineVerse não reproduz filmes completos; trailers oficiais são incorporados do YouTube quando disponíveis.
